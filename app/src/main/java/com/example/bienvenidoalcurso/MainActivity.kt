@@ -3,24 +3,34 @@ package com.example.exploracioncomponentes
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +38,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    // Vista principal
+                    PantallaGTAVI()
                 }
             }
         }
@@ -187,4 +197,120 @@ fun PreviewTooltip() {
     ) {
         IconButton(onClick = {}) { Icon(Icons.Default.Menu, contentDescription = null) }
     }
+}
+
+// ================= NUEVA FUNCIÓN GTA VI (SIN ERRORES R) =================
+
+@Composable
+fun PantallaGTAVI() {
+    val fondoMoradoOscuro = Color(0xFF1D0B20)
+    val textoMoradoClaro = Color(0xFFE2A8F3)
+    val moradoBorde = Color(0xFF8A33A5)
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(fondoMoradoOscuro)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(40.dp))
+
+        // Bloque Central: Avatar, Título y Subtítulo
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(160.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFF33143A))
+                    .border(3.dp, moradoBorde, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Avatar",
+                    tint = textoMoradoClaro,
+                    modifier = Modifier.size(90.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = "Grand Theft Auto VI",
+                color = textoMoradoClaro,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Vice City - Official Game Release",
+                color = textoMoradoClaro.copy(alpha = 0.8f),
+                fontSize = 16.sp
+            )
+        }
+
+        // Bloque Inferior: Datos de Contacto
+        Column(
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
+        ) {
+            ItemContactoGTA(
+                icono = Icons.Default.Phone,
+                texto = "+1 (123) 444 555 666",
+                colorTexto = textoMoradoClaro
+            )
+            ItemContactoGTA(
+                icono = Icons.Default.Share,
+                texto = "@RockstarGames",
+                colorTexto = textoMoradoClaro
+            )
+            ItemContactoGTA(
+                icono = Icons.Default.Email,
+                texto = "contacto@gtavi.com",
+                colorTexto = textoMoradoClaro
+            )
+        }
+    }
+}
+
+@Composable
+fun ItemContactoGTA(
+    icono: ImageVector,
+    texto: String,
+    colorTexto: Color
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 40.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icono,
+            contentDescription = null,
+            tint = colorTexto,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(20.dp))
+        Text(
+            text = texto,
+            color = colorTexto,
+            fontSize = 16.sp
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewPantallaGTAVI() {
+    PantallaGTAVI()
 }
